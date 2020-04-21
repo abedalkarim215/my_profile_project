@@ -1,0 +1,13 @@
+{% extends 'page/layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <form action="{% url 'edit_service' form.instance.id%}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-warning">save</button>
+
+
+    </form>
+
+
+{% endblock %}

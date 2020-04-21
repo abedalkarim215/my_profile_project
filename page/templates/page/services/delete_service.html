@@ -1,0 +1,18 @@
+{% extends 'page/layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <form action="{% url 'delete_service' service.id%}" method="post">
+    {% csrf_token %}
+    {{service.name_of_service}}
+        <br>
+        <img src="{{ service.logo.url }}">
+        <br>
+        {{ service.text }}
+        <br>
+    <button type="submit" class="btn btn-warning">delete</button>
+
+
+    </form>
+
+
+{% endblock %}

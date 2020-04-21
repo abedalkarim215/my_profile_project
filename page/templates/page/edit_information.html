@@ -1,0 +1,91 @@
+{% extends 'page/layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
+        <h1 style="text-align: center">General Information</h1>
+    <hr class="my-4">
+<form id="general_information" style="margin: 30px" method="post" action="{% url 'edit_informations' user__id %}">
+{% csrf_token %}
+    {% for j in user_form %}
+        {{ j.label }}
+        {{ j }}
+        <hr class="my-4">
+    {% endfor %}
+    {% for i in form %}
+        {{ i.label }}
+        {{ i }}
+
+        <hr class="my-4">
+    {% endfor %}
+<button style="display: block;width: 100%" class="btn btn-warning" type="submit">send</button>
+</form>
+    </section>
+    <hr class="my-4">
+
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
+    <div class="row">
+        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">Services</h1></div>
+        <div class="col-md-2"><button  type="button" class="btn btn-outline-warning">Add Service</button></div>
+    </div>
+
+
+    <br>
+    <div class="row">
+    {% for service in services  %}
+         <div class="col-md-4 col-sm-6 mb-4 text-center" >
+            <div class="panel border p-4" style="min-height: 400px">
+                <span class="icon text-secondary"><img alt="logo" width="70px" height="70px" src="{{ service.logo.url }}"></span>
+                <h4 class="font-ram py-4">{{ service.name_of_service }}</h4>
+                <p class="font-ram font-size-16 text-black-50">
+                    {{service.text}}
+                </p>
+                <hr class="my-4">
+                <div class="row" style="text-align: left;">
+                    <div class="col-md-6">
+                        <a style="width: 100%;" class="btn btn-outline-warning" href="{% url 'edit_service' service.id %}">edit</a>
+
+                    </div>
+                    <div class="col-md-6">
+                        <a style="width: 100%;" class="btn btn-outline-danger" href="{% url 'delete_service' service.id %}" >delete</a>
+
+                    </div>
+            </div>
+                </div>
+        </div>
+
+    {% endfor %}
+    </div>
+    </section>
+<hr class="my-4">
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="news">
+    <div class="row">
+        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">News</h1></div>
+        <div class="col-md-2"><button  type="button" class="btn btn-outline-warning">Add News</button></div>
+    </div>
+    <br>
+    <div class="row">
+        {% for new in news %}
+        <div class="col-sm-4 my-3">
+            <div class="card border-0">
+                <img src="{{ new.image.url }}" alt="news1" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title font-ram">{{new.title}}</h5>
+                    <hr class="my-4">
+                    <div class="row" style="text-align: left;">
+                    <div class="col-md-6">
+                        <a style="width: 100%;" class="btn btn-outline-warning" href="#">edit</a>
+
+                    </div>
+                    <div class="col-md-6">
+                        <a style="width: 100%;" class="btn btn-outline-danger" href="#" >delete</a>
+
+                    </div>
+            </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    </section>
+{% endblock %}

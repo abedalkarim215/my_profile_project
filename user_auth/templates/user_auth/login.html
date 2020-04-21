@@ -1,0 +1,39 @@
+{% extends 'page/layouts/base.html' %}
+
+{% block content%}
+
+        <h1 style="color: black;text-align: center;margin: 20px" >
+        Account Login
+        </h1>
+    <br>
+        {% if messages %}
+            {% for message in messages  %}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+                <form method="post" action="{% url 'login_user' %}" style="margin: 70px">
+                    {% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Username :</label>
+                        <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Username">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password :</label>
+                        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      </div>
+                    <br>
+                    <div style="text-align: center">
+                      <button style="display: block;width: 100%;font-size: 20px" type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                    <hr class="my-4">
+                    <div style="text-align: center">
+                        <a href="{% url 'sign_up_user' %}"  style="text-align: center;text-decoration: none">
+                            <button style="display: block;width: 100%;font-size: 20px"  type="button" class="btn btn-warning">If you don't have an account , create Your own</button>
+
+                        </a>
+                    </div>
+                </form>
+
+{% endblock%}

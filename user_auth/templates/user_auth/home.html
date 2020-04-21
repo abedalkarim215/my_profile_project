@@ -1,0 +1,52 @@
+{% extends 'user_auth/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome
+            <span style="font-weight: bold" >
+                {{ user.first_name }} {{ user.last_name }}
+            </span> to our Home Page
+        </h1>
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% if user.is_authenticated  %}
+            <br>
+            <p class="lead">
+                <h4>Your Account Information :</h4><br>
+                First Name : {{ user.first_name }}<br>
+                Last Name : {{ user.last_name }}<br>
+                Username : {{ user.username }}<br>
+                Email : {{ user.email }}<br>
+            </p>
+            <hr class="my-4">
+            <p class="lead" style="text-align: center">
+                <form method="post" action="{% url 'logout_user' %}" style="display: inline;text-align: center;background-color: #e9ecef;border: none;padding: 3px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg">Logout</button>
+                </form>
+                <a style="padding: 10px;font-size: 20px" href="{% url 'change_password' %}" class="btn btn-primary">
+                    Change The password
+                </a>
+                <form method="post" action="{% url 'delete_account' user.id %}" style="display: inline;text-align: center;background-color: #e9ecef;border: none;padding: 3px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg">delete my account</button>
+                </form>
+            </p>
+        {% else %}
+              <hr class="my-4">
+              <p>if you have an account please login , if not you can create an account by press the sign up button</p>
+                        <br>
+                        <br>
+              <p class="lead" style="text-align: center">
+                <a class="btn btn-primary btn-lg" href="{% url 'login_user' %}" role="button">Login</a>
+                <a class="btn btn-primary btn-lg" href="{% url 'sign_up_user' %}" role="button">Sign Up</a>
+              </p>
+        {% endif %}
+    </div>
+{% endblock %}

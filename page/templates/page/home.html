@@ -1,0 +1,221 @@
+{% extends 'page/layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+                <!-- site-banner area -->
+                <section class="site-banner" id="home">
+                    <div class="banner-area">
+                        <div class="author text-center">
+                            <div class="author-img"></div>
+                            <h1 class="text-white font-staat font-size-40 text-uppercase py-3">{{user_profile.first_name}} {{ user_profile.last_name }}</h1>
+                            <h5 class="text-white font-ram font-size-27">i'm <span id="typed"></span></h5>
+                        </div>
+                    </div>
+                </section>
+                <!-- #site-banner area -->
+
+                <!-- about me area -->
+                    <section class="about px-4 my-5" id="about_me">
+                        <div class="me py-5">
+                            <h5 class="text-uppercase font-os font-size-16 text-muted">information</h5>
+                            <h1 class="text-uppercase font-staat font-size-34">About Me</h1>
+                        </div>
+                        <div class="row m-0">
+                            <div class="col-sm-5 pl-0">
+                                <img src="{{ profile.personal_image.url }}" alt="profile image" class="img-fluid">
+                            </div>
+                            <div class="col-sm-6">
+                                <h6 class="text-uppercase font-os font-size-16 text-muted">About Me</h6>
+                                <h5 class="font-ram font-size-20 py-2">I'm {{user_profile.first_name}} {{ user_profile.last_name }} & <span id="typed_2"></span></h5>
+                                <p class="font-ram text-black-50 py-2">
+                                    {{profile.bio}}
+                                </p>
+                                <div class="d-flex flex-row flex-wrap justify-content-between py-4">
+                                    <div class="d-flex flex-column">
+                                        <p class="font-ram"><b>Birthday: </b><span class="text-black-50">{{profile.birthday}}</span></p>
+                                        <p class="font-ram"><b>Website: </b><span class="text-black-50">{{ profile.website }}</span></p>
+                                        <p class="font-ram"><b>Phone: </b><span class="text-black-50">{{ profile.phone }}</span></p>
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <p class="font-ram"><b>Degree: </b><span class="text-black-50">{{ profile.degree }}</span></p>
+                                        <p class="font-ram"><b>Mail: </b><span class="text-black-50">{{ user_profile.email }}</span></p>
+                                        <p class="font-ram"><b>Instagram: </b><span class="text-black-50">{{ profile.instagram }}</span></p>
+                                    </div>
+                                </div>
+{#                                <a href="https://www.facebook.com/abedalkarim99" class="btn btn-dark text-uppercase mr-3">Hire ME</a>#}
+                                <a href="{{profile.CV.url}}" class="btn btn-dark text-uppercase mr-3">Download CV</a>
+                            </div>
+                        </div>
+                    </section>
+                <!-- #about me area -->
+
+                <!-- ability -->
+                    <section class="skill px-4 py-5 bg-light" id="services">
+                        <div class="ability py-3">
+                            <h5 class="text-uppercase font-os font-size-16 text-muted">Ability</h5>
+                            <h1 class="text-uppercase font-staat font-size-34">My skills</h1>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 pl-4">
+                                <p class="font-ram font-size-16 text-black-50 pb-3">
+                                    {{profile.bio_skills}}
+                                </p>
+                            </div>
+                            <div class="col-sm-6 bars">
+                                <div class="bar-1 mb-4">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <p class="font-ram font-size-16">{{ profile.first_skill }}</p>
+                                        <span class="font-ram font-size-16">{{ profile.percent_first_skill }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 3px;">
+                                        <div class="progress-bar bgcolor-black" role="progressbar" style="width:{{ profile.percent_first_skill }}%"></div>
+                                    </div>
+                                </div>
+                                <div class="bar-1 mb-4">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <p class="font-ram font-size-16">{{ profile.second_skill }}</p>
+                                        <span class="font-ram font-size-16">{{ profile.percent_second_skill }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 3px;">
+                                        <div class="progress-bar bgcolor-black" role="progressbar" style="width:{{ profile.percent_second_skill }}%"></div>
+                                    </div>
+                                </div>
+                                {% if profile.third_skill %}
+                                <div class="bar-1 mb-4">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        <p class="font-ram font-size-16">{{ profile.third_skill }}</p>
+                                        <span class="font-ram font-size-16">{{ profile.percent_third_skill }}%</span>
+                                    </div>
+                                    <div class="progress" style="height: 3px;">
+                                        <div class="progress-bar bgcolor-black" role="progressbar" style="width:{{ profile.percent_third_skill }}%"></div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                <!-- #ability -->
+
+                <!-- services -->
+                    <section class="services-area px-4 py-5">
+                        <div class="do py-5">
+                            <h5 class="text-uppercase font-os font-size-16 text-muted">What i Do</h5>
+                            <h1 class="text-uppercase font-staat font-size-34">Services</h1>
+                        </div>
+                        <div class="row">
+                            {% for service in services %}
+                            <div class="col-sm-12 col-xs-12 col-md-6 col-lg-4 mb-4 text-center">
+                                <div class="panel border p-4">
+                                    <span class="icon text-secondary"><img alt="logo" width="70px" height="70px" src="{{ service.logo.url }}"></span>
+                                    <h4 class="font-ram py-4">{{ service.name_of_service }}</h4>
+                                    <p class="font-ram font-size-16 text-black-50">
+                                        {{service.text}}
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                <!-- #services -->
+
+
+
+
+                <!-- news -->
+                        <section class="news py-5 px-4 bg-light" id="news">
+                            <div class="py-3">
+                                <h5 class="text-uppercase font-os font-size-16 text-muted">Read</h5>
+                                <h1 class="text-uppercase font-staat font-size-34">Latest News</h1>
+                            </div>
+                            <div class="row">
+                                {% for new in news %}
+                                <div class="col-sm-12 col-xs-12 col-md-6 col-lg-4 my-3">
+                                    <div class="card border-0">
+                                        <img width="300px" height="200px" src="{{ new.image.url }}" alt="news1" class="card-img-top">
+                                        <div class="card-body">
+                                            <h5 class="card-title font-ram">{{new.title}}</h5>
+                                            <br>
+                                            <a class="btn btn-dark" style="display: block;width: 100%" href="{% url 'show_news_details' new.id %}">Show details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+                <!-- #news -->
+
+            <footer id="footer" class="pt-5 px-3">
+                    <div id="contact_us">
+                        <div class="py-3 px-2">
+                            <h5 class="text-uppercase font-os font-size-16 text-muted">Location</h5>
+                                <h1 class="text-uppercase font-staat font-size-34">Contact Us</h1>
+                        </div>
+                        <div class="row py-5">
+                            <div class="col-sm-6">
+                                <h6 class="text-uppercase font-ram font-size-16 text-dark"><span style="color: #e0a800;font-size: 20px">{{user_profile.first_name}}</span> &nbsp &nbsp contact details : -</h6>
+                                <p class="font-ram font-size-16 text-black-50 pt-3">PHONE: {{ profile.phone }}</p>
+                                {% if profile.second_phone %}
+                                    <p class="font-ram font-size-16 text-black-50">SECOND PHONE: {{ profile.second_phone }}</p>
+                                {% endif %}
+                                <p class="font-ram font-size-16 text-black-50">EMAIL: {{user_profile.email}}</p>
+                                <p class="font-ram font-size-16 text-black-50">ADDRESS: {{profile.address}}.</p>
+                                <p style="display:inline;" class="font-ram font-size-16 text-black-50">SOCHIAL MEDIA ACCOUNTS : </p>
+                             <div style="display: inline" class="col-sm-4 my-5 text-center">
+                                <a target="_blank" style="text-decoration: none;color: blue" href="{{ profile.url_of_facebook }}">
+                                    <span class="mr-3"><i class="fab fa-facebook-f"></i></span>
+                                </a>
+                                <a target="_blank" style="text-decoration: none;color: #0288d1" href="{{ profile.url_of_twitter }}">
+                                    <span class="mr-3"><i class="fab fa-twitter"></i></span>
+                                </a>
+                                <a target="_blank" style="text-decoration: none;color: orange" href="{{ profile.url_of_instagram }}">
+                                    <span class="mr-3"><i class="fab fa-instagram"></i></span>
+                                </a>
+                                {% if profile.url_of_youtube %}
+                                <a target="_blank" style="text-decoration: none;color: red" href="{{ profile.url_of_youtube }}">
+                                    <span class="mr-3"><i class="fab fa-youtube"></i></span>
+                                </a>
+                                {% endif %}
+
+
+
+                            </div>
+                            </div>
+                            <div class="col-sm-6 py-4 px-4">
+                                <h6 class="text-uppercase font-ram font-size-16">Get in touch</h6>
+                                <form action="{% url 'send_email' %}" class="py-3" method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col">
+                                            <input name="message_name" type="text" class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="col">
+                                            <input name="message_email_sender" type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <input hidden name="message_email_receiver" type="email" value="{{user_profile.email}}">
+                                    <textarea name="message_content" id="" cols="30" rows="3" class="form-control my-4" placeholder="Message"></textarea>
+                                    <button type="submit" class="btn btn-dark">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row bg-light py-5">
+                            <div class="col-sm-4 my-5 text-center">
+                                <h6 class="font-ram font-size-16 text-black-50">&copy;2020 AK99. All rights reserved</h6>
+                            </div>
+                            <div class="col-sm-4 my-4 text-center">
+                                <div class="footer-title">
+                                    <a href="https://www.instagram.com/abedalkarim99" class="navbar-brand font-staat font-size-40 text-dark">AK99</a>
+                                    <p style="font-size: 12px" class="description font-os text-black-50 text-uppercase">made by : abedalkarim aldabash</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" style="text-align: right">
+                            <a href="#home" class="btn btn-outline-dark   my-5 text-center" style="height: 40px;border-radius: 50%;margin-right: 20px">GO UP</a>
+                        </div>
+                            </div>
+                    </div>
+                </footer>
+
+
+{% endblock %}
