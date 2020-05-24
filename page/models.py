@@ -10,7 +10,7 @@ class Person(models.Model) :
         ('Doctoral' , 'Doctoral'),
     )
     address = models.CharField(max_length=200, blank=True,null=True)
-    personal_image = models.ImageField(upload_to='personal_images',default='personal_images/default_personal_image.jpg')
+    personal_image = models.FileField(upload_to='personal_images',default='personal_images/default_personal_image.jpg')
     bio = models.TextField(blank=True,null=True)
     birthday = models.DateField(blank=True,null=True)
 
@@ -18,7 +18,7 @@ class Person(models.Model) :
     phone = models.CharField(max_length=50, blank=True,null=True)
     second_phone = models.CharField(max_length=50,blank=True,null=True)
 
-    degree = models.CharField(max_length=30,choices=degree_list,blank=True,null=True)
+    degree = models.CharField(max_length=30,choices=degree_list,blank=True,null=True,default="High School")
 
     instagram = models.CharField(max_length=100,blank=True,null=True)
 
@@ -27,7 +27,7 @@ class Person(models.Model) :
     url_of_twitter = models.URLField(blank=True,null=True)
     url_of_youtube = models.URLField(blank=True,null=True)
 
-    CV = models.FileField(upload_to='CV_files',blank=True,null=True,default='CV_files/default_CV.pdf')
+    CV = models.FileField(upload_to='CV_files',default='CV_files/default_CV.pdf')
 
     # **********************************************************************************
     bio_skills = models.TextField(blank=True,null=True)

@@ -1,0 +1,56 @@
+{% extends 'page/layouts/base.html' %}
+{% load static %}
+{% block content %}
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
+        <h1 style="text-align: center">{% if service %}Edit{% else %}Add{% endif %} Service</h1>
+    <hr class="my-4">
+        <form method="post" {% if service %}action="{% url 'edit_service' service.id %}"{% else %} action="{% url 'add_service' %}"{% endif %} enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name Of The Service : </label>
+                    <input {% if service %} value="{{ service.name_of_service }}" {% endif %} name="name_of_the_service" type="text" class="form-control"  placeholder="Enter the name of the service">
+
+                </div>
+
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description For Your Service :</label>
+                        <textarea name="service_description" class="form-control" id="exampleFormControlTextarea1" rows="4">{% if service %}{{ service.text }}{% endif %}</textarea>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <label >Logo for your Service :</label>
+
+         <div class="row" style="border: black dashed 2px;padding: 30px">
+            <div class="col-md-12">
+                <div class="custom-file" >
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input name="service_logo" type="file" {% if service %}value="{{ service.logo.url }}" {% endif %} >
+                        </div>
+                    {% if service %}
+                        <div class="col-md-6">
+                            <span>The Current Logo : </span><a href=" {{ service.logo.url }}" > Click to Show Current Logo</a>
+
+                        </div>
+                    {% endif %}
+                    </div>
+{#                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Change your personal image">choose an image</label>#}
+                </div>
+            </div>
+        </div>
+
+            <br>
+            <br>
+            <button style="display: block;width: 100%" class="btn btn-warning" type="submit">{% if service %}Edit{% else %}Add{% endif %} The Service</button>
+        </form>
+    </section>
+
+
+{% endblock %}

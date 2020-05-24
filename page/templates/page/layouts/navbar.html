@@ -1,0 +1,65 @@
+{% load static %}
+<!-- header area -->
+    <header id="header">
+        <div class="row m-0">
+            <div class="col-3 bgcolor-black">
+                <nav class="primary-nav navbar-expand-md">
+                    <div class="site-title text-center text-light " style="margin: 30px;margin-left: 10px">
+                        {% if is_home %}
+                            <a href="{% url 'home' user__username %}" class="navbar-brand font-staat font-size-40">{{ user_profile.first_name }}<br>Profile</a>
+
+                        {% elif from_edit_view %}
+                            <a href="{% url 'home' user__username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+
+                        {% elif is_signup %}
+                            <a href="#" class="navbar-brand font-staat font-size-40">Create Your<br>Own</a>
+                        {% elif is_login %}
+                        <a href="#" class="navbar-brand font-staat font-size-40">Login</a>
+
+                        {% endif %}
+                        <p class="description text-uppercase font-os"></p>
+                    </div>
+                    <div class="d-flex flex-column">
+                        {% if from_edit_view %}
+                            <a href="#profile_link" class="nav-item nav-link text-white-50 font-os font-size-16 active">Profile Link</a>
+                            <a href="#general_information" class="nav-item nav-link text-white-50 font-os font-size-16 active">General Information</a>
+                            <a href="#skills" class="nav-item nav-link text-white-50 font-os font-size-16 active">skills</a>
+                            <a href="#services" class="nav-item nav-link text-white-50 font-os font-size-16 active">Services</a>
+                            <a href="#news" class="nav-item nav-link text-white-50 font-os font-size-16 active">News</a>
+                            <a href="#other_settings" class="nav-item nav-link text-white-50 font-os font-size-16 active">Other Settings</a>
+                             <form style="display: inline" method="post" action="{% url 'logout_user' %}">
+                        {% csrf_token %}
+                        <button  style="margin-top: 10px;display: block;width: 100%" class="btn btn-outline-warning" type="submit">Logout</button>
+                        </form>
+                        {% elif is_home %}
+                        <a href="#home" class="nav-item nav-link text-white-50 font-os font-size-16 active">Home</a>
+                        <a href="#about_me" class="nav-item nav-link text-white-50 font-os font-size-16 active">About</a>
+                        <a href="#services" class="nav-item nav-link text-white-50 font-os font-size-16 active">Services</a>
+                        <a href="#news" class="nav-item nav-link text-white-50 font-os font-size-16 active">News</a>
+                        <a href="#footer" class="nav-item nav-link text-white-50 font-os font-size-16 active">Contact Us</a>
+                        {% elif is_login %}
+                            <img  width="100%" height="500px" style="overflow-style: revert;margin-top: -30px" src="{% static 'page/images/login3.jpg' %}">
+                        {% elif is_signup %}
+                            <img  width="100%" height="100%" style="overflow-style: revert;margin-top: -30px" src="{% static 'page/images/signup2.jpg' %}">
+                        {% endif %}
+                    </div>
+                    <br>
+                {% if is_home %}
+                    {% if user.is_authenticated %}
+                        <form style="display: inline" method="post" action="{% url 'logout_user' %}">
+                        {% csrf_token %}
+                        <button  style="margin: 15px;" class="btn btn-outline-warning" type="submit">Logout</button>
+                        </form>
+                        <a href="{% url 'edit_informations' %}" class="btn btn-outline-warning">Edit Your Informations</a>
+                    {% else %}
+                        <a href="{% url 'login_user' %}" style="margin: 15px;" class="btn btn-outline-warning" type="submit">Login</a>
+                        <a href="{% url 'sign_up_user' %}" class="btn btn-outline-warning" type="submit">Create Your own page</a>
+                    {% endif %}
+                {% endif %}
+                </nav>
+            </div>
+
+        </div>
+        <button class="toggle-button"><span class="fas fa-bars fa-2x"></span></button>
+
+    </header>

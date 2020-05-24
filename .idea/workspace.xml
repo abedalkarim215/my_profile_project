@@ -1,20 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="728e5c96-44db-494e-bf28-94c35a16271b" name="Default Changelist" comment="" />
+    <list default="true" id="728e5c96-44db-494e-bf28-94c35a16271b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/page/templates/page/services/add_edit_service.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/static/page/css/myCss.css" beforeDir="false" afterPath="$PROJECT_DIR$/page/static/page/css/myCss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/page/static/page/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/templates/page/edit_information.html" beforeDir="false" afterPath="$PROJECT_DIR$/page/templates/page/edit_information.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/templates/page/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/page/templates/page/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/templates/page/layouts/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/page/templates/page/layouts/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/templates/page/news/add-news.html" beforeDir="false" afterPath="$PROJECT_DIR$/page/templates/page/news/add_edit_news.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/templates/page/services/add-service.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/page/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/templates/user_auth/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/templates/user_auth/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/templates/user_auth/change_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/templates/user_auth/change_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/templates/user_auth/generate_password_function/generate_password.html" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/templates/user_auth/generate_password_function/generate_password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/templates/user_auth/generate_password_function/generate_password_result.html" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/templates/user_auth/generate_password_function/generate_password_result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_auth/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_auth/views.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="db" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1aB8LK9HjvkYlCwLACDsUfssgZ2" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -22,9 +69,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/user_auth/templates/user_auth" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -34,13 +82,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ProBook\Desktop\project DONE\myprofile-project\user_auth\templates\user_auth" />
       <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project\page\static\page\images" />
       <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project\page" />
       <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project\media\CV_files" />
       <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project\media\personal_images" />
-      <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project\media\logo_services" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\ProBook\Desktop\project DONE\myprofile-project\page\static\page\css" />
       <recent name="C:\Users\ProBook\Desktop\Web222\myprofile-project" />
     </key>
   </component>
@@ -84,6 +133,14 @@
       <workItem from="1586435516951" duration="4083000" />
       <workItem from="1586712242376" duration="610000" />
       <workItem from="1586733071399" duration="194000" />
+      <workItem from="1587432716546" duration="611000" />
+      <workItem from="1587853432820" duration="394000" />
+      <workItem from="1588938477947" duration="220000" />
+      <workItem from="1589797953161" duration="3237000" />
+      <workItem from="1589843362956" duration="10681000" />
+      <workItem from="1589898976892" duration="21292000" />
+      <workItem from="1590226938991" duration="881000" />
+      <workItem from="1590264234755" duration="15729000" />
     </task>
     <servers />
   </component>
@@ -91,13 +148,17 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="128" key="FileChooserDialogImpl" timestamp="1586733264659">
+    <state x="463" y="128" key="FileChooserDialogImpl" timestamp="1590265187458">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="463" y="128" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1586733264659" />
-    <state x="390" y="173" width="585" height="367" key="com.intellij.ide.util.TipDialog" timestamp="1587432732901">
+    <state x="463" y="128" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1590265187458" />
+    <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1590345469480">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="390" y="173" width="585" height="367" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1587432732901" />
+    <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.738@0.0.1366.738" timestamp="1590345469480" />
+    <state x="390" y="173" width="585" height="367" key="com.intellij.ide.util.TipDialog" timestamp="1590264291675">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="390" y="173" width="585" height="367" key="com.intellij.ide.util.TipDialog/0.0.1366.738@0.0.1366.738" timestamp="1590264291675" />
   </component>
 </project>

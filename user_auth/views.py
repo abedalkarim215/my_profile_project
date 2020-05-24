@@ -99,16 +99,21 @@ def sign_up_user(request) :
                                             password_lol=user_password1
                                         )
                 login(request,user)
-                return redirect("edit_informations",user.id)
+                return redirect("edit_informations")
 
 
 @login_required(login_url='login_user')
-def delete_account(request,user_id) :
-    user = get_object_or_404(User , pk=user_id)
+def delete_account(request) :
+    user = get_object_or_404(User , pk=request.user.id)
     if request.method == "POST" :
-        user.delete()
-        messages.info(request,"Your account was deleted sucssfully")
-        return redirect('home')
+        text_confirm  = user.username+"-delete my account"
+        if (request.POST['confirmation'] == text_confirm) and (user.check_password(request.POST['password_for_deleting_account'])) :
+            logout(request)
+            user.delete()
+            messages.info(request,"Your account was deleted sucssfully")
+        else :
+            messages.info(request, "the opreation was not sucssfully")
+        return redirect('homePage')
 
 @login_required(login_url='login_user')
 def change_password(request) :
@@ -122,17 +127,33 @@ def change_password(request) :
 
         if not user.check_password(user_old_password):
             messages.info(request, 'the password(current) You entered is incorrect')
-            return redirect('change_password')
         elif user_new_password != user_new_password2 :
             messages.info(request, 'the new password did not matching')
-            return redirect('change_password')
+        elif user_old_password == user_new_password :
+            messages.info(request, 'the new password can not be the old password')
         else :
             user.set_password(user_new_password)
             user.save()
             # update_session_auth_hash(request, user)
             messages.info(request, "Your password was changed sucssfully , please login again")
-            return redirect('home')
+        return redirect('edit_informations')
 
+
+def change_username(request):
+    if request.method == "POST" :
+        user = get_object_or_404(User,pk=request.user.id)
+        new_username_ = request.POST["new_username"]
+
+        uniqe_username = User.objects.filter(username=new_username_)
+        if user.username == new_username_ :
+            messages.info(request,"You Entered The Same Username !!")
+        elif uniqe_username.__len__() != 0 :
+            messages.info(request,"Sorry , This Username is already taken !")
+        else :
+            user.username = new_username_
+            user.save()
+            messages.info(request, "Username has been changed successfully")
+        return redirect('edit_informations')
 
 
 

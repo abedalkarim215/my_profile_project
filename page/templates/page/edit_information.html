@@ -1,39 +1,319 @@
 {% extends 'page/layouts/base.html' %}
 {% load static %}
 {% block content %}
-    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
+    {% include 'user_auth/change_password.html' %}
+    {% include 'user_auth/delete_account.html' %}
+    {% include 'user_auth/change_username.html' %}
+    {% if messages %}
+    <section style="margin: 20px;border: white solid 2px;padding: 20px"  id="messages">
+    {% for message in messages %}
+    <div style="text-align: center" class="alert alert-primary" role="alert">
+       {{message}}
+    </div>
+    {% endfor %}
+    </section>
+    {% endif %}
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="profile_link">
+        <h1 style="text-align: center">Your Profile Link</h1>
+    <hr class="my-4">
+        <div class="row">
+            <form action="" class="col-md-12 row">
+            <div class="col-md-10" >
+                    <input style="display:block;width: 100%;text-align:center;font-size: 20px;" class="alert alert-success" disabled type="text" value="http://127.0.0.1:8000/profile/{{request.user.username}}" id="profile_link" >
+            </div>
+            <div class="col-md-2">
+                <button style="display: block;width: 100%" class="btn btn-primary btn-lg" type="button" onclick="copy_profile_link()">Copy</button>
+            </div>
+            </form>
+            <hr class="my-4 col-md-10">
+
+            <div class="col-md-12">
+                 <button style="display: block;width: 100%" type="button" class="btn btn-warning " data-toggle="modal" data-target="#exampleModal_change_username">
+                    Change Username
+                </button>
+            </div>
+        </div>
+
+
+    </section>
+    <hr class="my-4">
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="general_information">
         <h1 style="text-align: center">General Information</h1>
     <hr class="my-4">
-<form id="general_information" style="margin: 30px" method="post" action="{% url 'edit_informations' user__id %}">
-{% csrf_token %}
-    {% for j in user_form %}
-        {{ j.label }}
-        {{ j }}
-        <hr class="my-4">
-    {% endfor %}
-    {% for i in form %}
-        {{ i.label }}
-        {{ i }}
 
-        <hr class="my-4">
-    {% endfor %}
-<button style="display: block;width: 100%" class="btn btn-warning" type="submit">send</button>
+    <form method="post" action="{% url 'edit_informations' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input hidden name="from_gereral_information" type="text">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">First Name : </label>
+                    <input value="{{ request.user.first_name }}" name="first_name" type="text" class="form-control"  placeholder="Enter First Name">
+                </div>
+            </div>
+            <div class="col-md-6">
+               <div class="form-group">
+                    <label for="exampleInputEmail1">Last Name : </label>
+                    <input value="{{ request.user.last_name }}" name="last_name" type="text" class="form-control"  placeholder="Enter Last Name">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input value="{{ request.user.email }}" name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="col-md-6">
+
+               <div class="form-group">
+                    <label for="exampleInputEmail1">Instagram : </label>
+                    <input value="{{ person.instagram }}" name="instagram_username" type="text" class="form-control"  placeholder="Enter Your instagram">
+                </div>
+            </div>
+        </div>
+
+
+
+         <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phone : </label>
+                    <input value="{{ person.phone }}" name="phone1" required type="text" class="form-control"  placeholder="Enter Your Phone">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Second Phone : </label>
+                    <input value="{{ person.second_phone }}" name="phone2" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row" style="border: black dashed 2px;padding: 30px">
+            <div class="col-md-12">
+                <div class="custom-file" >
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input name="profile_image" type="file" value="{{ person.personal_image.url }}" >
+                        </div>
+                        <div class="col-md-6">
+                            <span>The Current Image : </span><a href=" {{ person.personal_image.url }}" > Click to Show Current Image</a>
+
+                        </div>
+                    </div>
+{#                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Change your personal image">choose an image</label>#}
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Address : </label>
+                    <input value="{{ person.address }}"  name="address" type="text" class="form-control"  placeholder="Enter Your Address">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Birthday : </label>
+                    <input value="2020/10/10" name="birthday" type="text" class="form-control"  placeholder="Enter Your Birthday">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Bio :</label>
+                    <textarea name="bio" class="form-control" id="exampleFormControlTextarea1" rows="4">{{ person.bio }}</textarea>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Website Link : </label>
+                    <input value="{{ person.website }}" name="website_link" type="url" class="form-control"  placeholder="Enter Your Second Phone">
+                    <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
+
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group col-md-12">
+                      <label for="inputState">Degree</label>
+                      <select name="degree"  id="inputState" class="form-control">
+                          {% if person.degree == "High School" %}
+                            <option value="High School" selected>High School</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="Doctoral">Doctoral</option>
+                          {% elif person.degree == "Bachelor" %}
+                              <option value="High School" >High School</option>
+                            <option value="Bachelor" selected>Bachelor</option>
+                            <option value="Master">Master</option>
+                            <option value="Doctoral">Doctoral</option>
+                          {% elif person.degree == "Master" %}
+                            <option value="High School" >High School</option>
+                            <option value="Bachelor" >Bachelor</option>
+                            <option value="Master" selected>Master</option>
+                            <option value="Doctoral">Doctoral</option>
+                          {% else %}
+                          <option value="High School" >High School</option>
+                            <option value="Bachelor" >Bachelor</option>
+                            <option value="Master" >Master</option>
+                            <option value="Doctoral" selected>Doctoral</option>
+                          {% endif %}
+                      </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Instagram Link : </label>
+                    <input value="{{ person.url_of_instagram }}" name="instagram_link" required type="url" class="form-control"  placeholder="Enter Your Instagram Link">
+                    <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Facebook Link : </label>
+                    <input value="{{ person.url_of_facebook }}" name="facebook_link" required type="url" class="form-control"  placeholder="Enter Your Facebook Link">
+                    <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Twitter Link : </label>
+                    <input value="{{ person.url_of_twitter }}" name="twitter_link" required type="url" class="form-control"  placeholder="Enter Your Twitter Link">
+                    <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Youtube Channel Link : </label>
+                    <input value="{{ person.url_of_youtube }}" name="youtube_link" type="url" class="form-control"  placeholder="Enter Your Youtube Channel Link">
+                    <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
+                </div>
+            </div>
+        </div>
+        <br>
+         <div class="row">
+            <div class="col-md-12">
+                <div class="custom-file">
+
+{#                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Change your CV file">choose a file</label>#}
+                </div>
+            </div>
+        </div>
+    <div class="row" style="border: black dashed 2px;padding: 30px">
+            <div class="col-md-12">
+                <div class="custom-file" >
+                    <div class="row">
+                        <div class="col-md-6">
+                          <input name="CV_file"  type="file" value="{{ person.CV.url }}">
+                        </div>
+                        <div class="col-md-6">
+                            <span>The Current CV : </span><a href=" {{ person.CV.url }}" > Click to Show Current CV</a>
+
+                        </div>
+                    </div>
+{#                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Change your personal image">choose an image</label>#}
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <button style="display: block;width: 100%" class="btn btn-warning" type="submit">Save Changes</button>
+
 </form>
     </section>
     <hr class="my-4">
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="skills">
+        <h1 style="text-align: center">Skills</h1>
+    <hr class="my-4">
+        <form method="post" action="{% url 'edit_informations' %}">
+            {% csrf_token %}
+            <input hidden name="from_skills" type="text">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description For Your Skills :</label>
+                        <textarea name="bio_skills" class="form-control" id="exampleFormControlTextarea1" rows="4">{{ person.bio_skills }}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name Of First Skill : </label>
+                    <input name="name_of_first_skill" value="{{ person.first_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
 
+                </div>
+
+            </div>
+            <div class="col-md-6">
+               <label for="customRange1">Percent Of First Skill : </label>
+                <input name="percent_of_first_skill" value="{{person.percent_first_skill}}" type="range" class="custom-range" id="customRange1">
+            </div>
+        </div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name Of Second Skill : </label>
+                    <input name="name_of_second_skill" value="{{ person.second_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+
+                </div>
+
+            </div>
+            <div class="col-md-6">
+               <label for="customRange1">Percent Of Second Skill : </label>
+                <input name="percent_of_second_skill" value="{{ person.percent_second_skill }}" type="range" class="custom-range" id="customRange1">
+            </div>
+        </div>
+            <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Name Of Third Skill : </label>
+                    <input name="name_of_third_skill" value="{{ person.third_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+
+                </div>
+
+            </div>
+            <div class="col-md-6">
+               <label for="customRange1" style="font-weight: 700">Percent Of Third Skill : </label>
+                <input name="percent_of_third_skill" value="{{ person.percent_third_skill }}" type="range" class="custom-range" id="customRange1">
+            </div>
+        </div>
+            <br>
+            <button style="display: block;width: 100%" class="btn btn-warning" type="submit">Save Changes</button>
+        </form>
+    </section>
+    <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
     <div class="row">
         <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">Services</h1></div>
-        <div class="col-md-2"><button  type="button" class="btn btn-outline-warning">Add Service</button></div>
+        <hr class="my-4">
+        <div class="col-md-2"><a href="{% url 'add_service' %}" class="btn btn-outline-warning">Add Service</a></div>
     </div>
 
 
     <br>
     <div class="row">
     {% for service in services  %}
-         <div class="col-md-4 col-sm-6 mb-4 text-center" >
-            <div class="panel border p-4" style="min-height: 400px">
+         <div class="col-md-4 col-sm-6 mb-4 text-center" id="service_{{ service.id }}">
+            <div class="panel border p-4" style="min-height: 400px" id="content_of_service_number_{{ service.id }}">
                 <span class="icon text-secondary"><img alt="logo" width="70px" height="70px" src="{{ service.logo.url }}"></span>
                 <h4 class="font-ram py-4">{{ service.name_of_service }}</h4>
                 <p class="font-ram font-size-16 text-black-50">
@@ -46,7 +326,7 @@
 
                     </div>
                     <div class="col-md-6">
-                        <a style="width: 100%;" class="btn btn-outline-danger" href="{% url 'delete_service' service.id %}" >delete</a>
+                        <a style="width: 100%;" class="btn btn-outline-danger" onclick="del_service( {{ service.id  }} )">delete</a>
 
                     </div>
             </div>
@@ -60,32 +340,95 @@
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="news">
     <div class="row">
         <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">News</h1></div>
-        <div class="col-md-2"><button  type="button" class="btn btn-outline-warning">Add News</button></div>
+        <div class="col-md-2"><a class="btn btn-outline-warning" href="{% url 'add_news' %}">Add News</a></div>
     </div>
     <br>
     <div class="row">
         {% for new in news %}
-        <div class="col-sm-4 my-3">
-            <div class="card border-0">
-                <img src="{{ new.image.url }}" alt="news1" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title font-ram">{{new.title}}</h5>
+            <div class="col-md-4 col-sm-6 mb-4 text-center" id="news_{{ new.id }}">
+                <div class="panel border p-4" style="min-height: 400px" id="content_of_news_number_{{ new.id }}">
+                    <img style="margin: -10px" width="100%" src="{{ new.image.url }}">
+                    <h4 class="font-ram py-4">{{new.title}}</h4>
                     <hr class="my-4">
                     <div class="row" style="text-align: left;">
-                    <div class="col-md-6">
-                        <a style="width: 100%;" class="btn btn-outline-warning" href="#">edit</a>
-
+                        <div class="col-md-6">
+                            <a style="width: 100%;" class="btn btn-outline-warning" href="{% url 'edit_news' new.id %}">edit</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a style="width: 100%;" class="btn btn-outline-danger" onclick="del_news( {{ new.id  }} )">delete</a>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <a style="width: 100%;" class="btn btn-outline-danger" href="#" >delete</a>
-
-                    </div>
-            </div>
                 </div>
             </div>
-        </div>
+
+
         {% endfor %}
     </div>
 
     </section>
+    <hr class="my-4">
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="other_settings">
+    <div class="row">
+        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">Settings</h1></div>
+    </div>
+            <hr class="my-4">
+
+        <div class="row">
+            <div class="col-md-6">
+                <button style="display: block;width: 100%" type="button" class="btn btn-warning " data-toggle="modal" data-target="#exampleModal_change_password">
+                    Change The password
+                </button>
+
+            </div>
+            <div class="col-md-6">
+                <button style="display: block;width: 100%" type="button" class="btn btn-danger " data-toggle="modal" data-target="#exampleModal_delete_account">
+                    Delete My Account
+                </button>
+            </div>
+        </div>
+
+
+
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+            function copy_profile_link() {
+              var copyText = document.getElementById("profile_link");
+              copyText.select();
+              copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+              document.execCommand("copy");
+
+              {#alert("Copied the text: " + copyText.value);#}
+            }
+
+            var csrf = '{{ csrf_token }}';
+            function del_service(service_id) {
+                $.ajax({
+                    type : 'POST',
+                    url  : '/delete_service/' + service_id,
+                    data : {'csrfmiddlewaretoken' : csrf},
+                    success:function () {
+                        alert('Are you sure about deleting this "Service" ?');
+                        $('#content_of_service_number_'+service_id).addClass('bg-danger');
+                        $('#service_'+service_id).fadeOut(2000);
+                    }
+                })
+            }
+            function del_news(news_id) {
+                $.ajax({
+                    type : 'POST',
+                    url  : '/delete_news/' + news_id ,
+                    data : {'csrfmiddlewaretoken' : csrf},
+                    success:function () {
+                        alert('Are you sure about deleting this "news element" ?');
+                        $('#content_of_news_number_'+news_id).addClass('bg-danger');
+                        $('#news_'+news_id).fadeOut(2000);
+                    }
+                })
+            }
+
+    </script>
 {% endblock %}
