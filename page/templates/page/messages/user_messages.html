@@ -1,0 +1,158 @@
+{% extends 'page/layouts/base.html' %}
+{% block title %}Profile | Messages{% endblock%}
+{% block content %}
+{% include 'user_auth/modals/logout.html' %}
+{% include 'page/messages/modals/delete_all_messages.html' %}
+{% include 'page/messages/modals/delete_all_replyes.html' %}
+{% include 'page/messages/modals/reply_to_all.html' %}
+<section style="margin: 20px;border: black solid 2px;padding: 20px"  id="your_messages">
+        <h1 class="head_section" style="text-align: center">Your Messages</h1>
+    <hr class="my-4">
+{% if all_messages %}
+
+        <div class="container-fluid" >
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sender's Name</th>
+                        <th>Content </th>
+                        <th>Time </th>
+                        <th>Replay</th>
+                        <th>Delete </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for message in all_messages %}
+
+                    <tr id="message_{{ message.id }}">
+
+                        <td style="text-align: center"><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_message' message.id %}"> {{ message.name }}</a> </td>
+                        <td><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_message' message.id %}"> {{ message.text|slice:50}}{% if message.text|length > 50 %} . . . {% endif %}</a></td>
+                        <td><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_message' message.id %}"> {{ message.time }} </a></td>
+
+                        <td>
+                            <a style="display: block;width: 100%" href="{% url 'user_replay' message.id %}" class="btn btn-info"> Replay </a>
+
+                        </td>
+                        <td>
+                                <a onclick="del_messages({{ message.id }})" style="display:block;width: 100%;color: white;height: 100%"  class="btn btn-danger btn-sm"> X </a>
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+            <small  class="form-text text-muted">** Click On The Message To Show Its Details</small>
+            <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <button style="display: block;width: 100%;margin: 10px" type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal_reply_to_all">
+                                Reply To All
+                     </button>
+                </div>
+                <div class="col-md-3">
+                    <button style="display: block;width: 100%;margin: 10px" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_delete_all_messages">
+                                Delete All Messages
+                     </button>
+                </div>
+
+            </div>
+        </div>
+{% else %}
+{#        <p class="col-md-12" style="text-align: center;font-size: 25px;font-family: Roboto,Arial, Helvetica, sans-serif;">Unfortunately , You don't have any Messages , Please dont cry you will get some</p>#}
+        <div style="text-align: center" class="alert alert-primary" role="alert" >
+       Unfortunately , You don't have any Messages , Please dont cry you will get some
+    </div>
+    <hr class="col-md-12 my-4">
+{% endif %}
+    </section>
+    <hr class="my-4">
+    <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="your_replays">
+        <h1 class="head_section" style="text-align: center">Your Replyes</h1>
+    <hr class="my-4">
+{% if all_replays %}
+        <div class="container-fluid">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Receiver's Name</th>
+                        <th>Receiver's Email</th>
+                        <th>Content</th>
+                        <th>Time</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for replay in all_replays %}
+                    <tr id="replay_{{ replay.id }}">
+                        <td> <a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_replay_message' replay.id %}">{{ replay.receiver_name }} </td>
+                        <td><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_replay_message' replay.id %}"> {{ replay.receiver_email }} </a></td>
+                        <td><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_replay_message' replay.id %}"> {{ replay.text|slice:50}}{% if message.text|length > 50 %} . . . {% endif %}</a></td>
+                        <td><a style="color: black;text-decoration: none;cursor: help;display: block" href="{% url 'show_replay_message' replay.id %}"> {{ replay.time }} </a></td>
+                        <td>
+                                <a style="display: block;width: 100%;color: white" onclick="del_replays({{ replay.id }})" class="btn btn-danger btn-sm"> X </a>
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        <small  class="form-text text-muted">** Click On The Message To Show Its Details</small>
+        </div>
+    <div class="row">
+                <div class="col-md-9"></div>
+                <div class="col-md-3">
+{#                    <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-danger" href="{% url '' %}"></a>#}
+                    <button style="display: block;width: 100%;" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_delete_all_replyes">
+                                Delete All Replyes
+                     </button>
+
+                </div>
+
+            </div>
+    {% else %}
+{#        <p class="col-md-12" style="text-align: center;font-size: 25px;font-family: Roboto,Arial, Helvetica, sans-serif;">Unfortunately , You don't have any Messages , Please dont cry you will get some</p>#}
+        <div style="text-align: center" class="alert alert-primary" role="alert">
+       You don't have any Replay Messages .
+    </div>
+    <hr class="col-md-12 my-4">
+{% endif %}
+    </section>
+
+{% endblock %}
+{% block js %}
+    <script>
+            var csrf = '{{ csrf_token }}';
+            function del_messages(message_id) {
+                $.ajax({
+                    type : 'POST',
+                    url  : '/delete_message/' + message_id,
+                    data : {'csrfmiddlewaretoken' : csrf},
+                    success:function () {
+                        alert('Are you sure about deleting this "Message" ?');
+                        $('#message_' + message_id).addClass('bg-danger');
+                        $('#message_' + message_id).fadeOut(2000);
+                    }
+                })
+            }
+            function del_replays(replay_id) {
+                $.ajax({
+                    type : 'POST',
+                    url  : '/delete_replay/' + replay_id,
+                    data : {'csrfmiddlewaretoken' : csrf},
+                    success:function () {
+                        alert('Are you sure about deleting this "Replay" ?');
+                        $('#replay_' + replay_id).addClass('bg-danger');
+                        $('#replay_' + replay_id).fadeOut(2000);
+                    }
+                })
+            }
+    </script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'page/layouts/base.html' %}
+{% block title %}Profile | Replay{% endblock%}
+{% block content %}
+<section style="margin: 20px;border: black solid 2px;padding: 20px"  id="replay">
+        <h1 class="head_section" style="text-align: center">Replay</h1>
+    <hr class="my-4">
+    <div style="font-size: 20px;text-align: center">
+
+        <p> You Are Sending A Replay Message To :</p>
+        <ul style="text-align: left">
+            <li>Name : {{ receiver.name }}</li>
+            <li>Email : {{ receiver.email_sender }}</li>
+        </ul>
+    </div>
+    <hr class="my-4">
+
+{#<p style="font-size: 30px">Your Message :</p>#}
+    <form action="{% url 'user_replay' receiver.id %}" method="post">
+            {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label style="font-size: 20px" for="exampleFormControlTextarea1">Your Message  :</label>
+                    <textarea name="message_replay" class="form-control" id="exampleFormControlTextarea1" rows="4"></textarea>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button style="display: block;width: 100%" class="btn btn-info" type="submit">Send Replay</button>
+
+    </form>
+
+        </section>
+
+{% endblock %}

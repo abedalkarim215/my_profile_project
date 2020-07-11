@@ -1,20 +1,15 @@
 {% extends 'page/layouts/base.html' %}
 {% load static %}
+{% block title %}Settings | {{user__username}}{% endblock %}
 {% block content %}
-    {% include 'user_auth/change_password.html' %}
-    {% include 'user_auth/delete_account.html' %}
-    {% include 'user_auth/change_username.html' %}
-    {% if messages %}
-    <section style="margin: 20px;border: white solid 2px;padding: 20px"  id="messages">
-    {% for message in messages %}
-    <div style="text-align: center" class="alert alert-primary" role="alert">
-       {{message}}
-    </div>
-    {% endfor %}
-    </section>
-    {% endif %}
+
+    {% include 'user_auth/modals/change_password.html' %}
+    {% include 'user_auth/modals/delete_account.html' %}
+    {% include 'user_auth/modals/change_username.html' %}
+    {% include 'user_auth/modals/logout.html' %}
+
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="profile_link">
-        <h1 style="text-align: center">Your Profile Link</h1>
+        <h1 class="head_section" style="text-align: center">Your Profile Link</h1>
     <hr class="my-4">
         <div class="row">
             <form action="" class="col-md-12 row">
@@ -22,7 +17,7 @@
                     <input style="display:block;width: 100%;text-align:center;font-size: 20px;" class="alert alert-success" disabled type="text" value="http://127.0.0.1:8000/profile/{{request.user.username}}" id="profile_link" >
             </div>
             <div class="col-md-2">
-                <button style="display: block;width: 100%" class="btn btn-primary btn-lg" type="button" onclick="copy_profile_link()">Copy</button>
+                <button type="button" style="display: block;width: 100%" class="btn btn-primary btn-lg" onclick="copy_profile_link()">Copy</button>
             </div>
             </form>
             <hr class="my-4 col-md-10">
@@ -38,8 +33,11 @@
     </section>
     <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="general_information">
-        <h1 style="text-align: center">General Information</h1>
+        <h1 class="head_section" style="text-align: center">General Information</h1>
     <hr class="my-4">
+
+
+
 
     <form method="post" action="{% url 'edit_informations' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -48,13 +46,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">First Name : </label>
-                    <input value="{{ request.user.first_name }}" name="first_name" type="text" class="form-control"  placeholder="Enter First Name">
+                    <input required value="{{ request.user.first_name }}" name="first_name" type="text" class="form-control"  placeholder="Enter First Name">
                 </div>
             </div>
             <div class="col-md-6">
                <div class="form-group">
                     <label for="exampleInputEmail1">Last Name : </label>
-                    <input value="{{ request.user.last_name }}" name="last_name" type="text" class="form-control"  placeholder="Enter Last Name">
+                    <input required value="{{ request.user.last_name }}" name="last_name" type="text" class="form-control"  placeholder="Enter Last Name">
                 </div>
             </div>
         </div>
@@ -65,11 +63,15 @@
                     <input value="{{ request.user.email }}" name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
             </div>
-            <div class="col-md-6">
-
-               <div class="form-group">
-                    <label for="exampleInputEmail1">Instagram : </label>
-                    <input value="{{ person.instagram }}" name="instagram_username" type="text" class="form-control"  placeholder="Enter Your instagram">
+            <div class="col-md-6" style="">
+                <div class="col-auto">
+                  <label for="inlineFormInputGroup">Instagram Username</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">@</div>
+                    </div>
+                    <input {% if person.instagram != None %}value="{{ person.instagram }}"{% endif %} name="instagram_username" type="text" class="form-control" placeholder="Username">
+                  </div>
                 </div>
             </div>
         </div>
@@ -80,31 +82,34 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Phone : </label>
-                    <input value="{{ person.phone }}" name="phone1" required type="text" class="form-control"  placeholder="Enter Your Phone">
+                    <input {% if person.phone != None %}value="{{ person.phone }}"{% endif %} name="phone1"  type="text" class="form-control"  placeholder="Enter Your Phone">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Second Phone : </label>
-                    <input value="{{ person.second_phone }}" name="phone2" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+                    <input {% if person.second_phone != None %}value="{{ person.second_phone }}"{% endif %} name="phone2" type="text" class="form-control"  placeholder="Enter Your Second Phone">
                 </div>
             </div>
         </div>
         <br>
-        <div class="row" style="border: black dashed 2px;padding: 30px">
+        <div class="row" >
             <div class="col-md-12">
-                <div class="custom-file" >
-                    <div class="row">
-                        <div class="col-md-6">
+
+                    <div class="row" style="border: black dashed 2px;padding: 10px;">
+                        <div class="col-md-6" style="text-align: right;padding: 30px;border-right: black 1px solid">
+{#                            <span>The Current Image : </span><br>#}
+{#                            <a href=" {{ person.personal_image.url }}" > Click to Show Current Image</a>#}
+                            <a target="_blank" href="{{ person.personal_image.url }}"><img src="{{ person.personal_image.url }}" width="100px" height="100px" class="img-fluid img-thumbnail"></a>
+                        </div>
+                        <div class="col-md-6" style="padding: 30px">
+                            <label>Change The Current Image : </label><br><br>
                             <input name="profile_image" type="file" value="{{ person.personal_image.url }}" >
                         </div>
-                        <div class="col-md-6">
-                            <span>The Current Image : </span><a href=" {{ person.personal_image.url }}" > Click to Show Current Image</a>
 
-                        </div>
                     </div>
 {#                  <label class="custom-file-label" for="customFileLangHTML" data-browse="Change your personal image">choose an image</label>#}
-                </div>
+
             </div>
         </div>
         <br>
@@ -113,7 +118,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Address : </label>
-                    <input value="{{ person.address }}"  name="address" type="text" class="form-control"  placeholder="Enter Your Address">
+                    <input {% if person.address != None %}value="{{ person.address }}"{% endif %}  name="address" type="text" class="form-control"  placeholder="Enter Your Address">
                 </div>
             </div>
             <div class="col-md-6">
@@ -130,7 +135,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Bio :</label>
-                    <textarea name="bio" class="form-control" id="exampleFormControlTextarea1" rows="4">{{ person.bio }}</textarea>
+                    <textarea name="bio" class="form-control" id="exampleFormControlTextarea1" rows="4">{% if person.bio != None %}{{ person.bio }}{% endif %}</textarea>
                 </div>
             </div>
         </div>
@@ -140,7 +145,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Website Link : </label>
-                    <input value="{{ person.website }}" name="website_link" type="url" class="form-control"  placeholder="Enter Your Second Phone">
+                    <input {% if person.website != None %}value="{{ person.website }}"{% endif %} name="website_link" type="url" class="form-control"  placeholder="Enter Your Second Phone">
                     <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
 
                 </div>
@@ -180,7 +185,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Instagram Link : </label>
-                    <input value="{{ person.url_of_instagram }}" name="instagram_link" required type="url" class="form-control"  placeholder="Enter Your Instagram Link">
+                    <input {% if person.url_of_instagram != None %}value="{{ person.url_of_instagram }}"{% endif %} name="instagram_link"  type="url" class="form-control"  placeholder="Enter Your Instagram Link">
                     <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
 
                 </div>
@@ -188,21 +193,21 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Facebook Link : </label>
-                    <input value="{{ person.url_of_facebook }}" name="facebook_link" required type="url" class="form-control"  placeholder="Enter Your Facebook Link">
+                    <input {% if person.url_of_facebook != None %}value="{{ person.url_of_facebook }}"{% endif %} name="facebook_link"  type="url" class="form-control"  placeholder="Enter Your Facebook Link">
                     <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Twitter Link : </label>
-                    <input value="{{ person.url_of_twitter }}" name="twitter_link" required type="url" class="form-control"  placeholder="Enter Your Twitter Link">
+                    <input {% if person.url_of_twitter != None %}value="{{ person.url_of_twitter }}"{% endif %} name="twitter_link"  type="url" class="form-control"  placeholder="Enter Your Twitter Link">
                     <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Youtube Channel Link : </label>
-                    <input value="{{ person.url_of_youtube }}" name="youtube_link" type="url" class="form-control"  placeholder="Enter Your Youtube Channel Link">
+                    <input {% if person.url_of_youtube != None %}value="{{ person.url_of_youtube }}"{% endif %} name="youtube_link" type="url" class="form-control"   placeholder="Enter Your Youtube Channel Link">
                     <small  class="form-text text-muted">The link must start with "  https:// " or " http:// "</small>
                 </div>
             </div>
@@ -241,7 +246,7 @@
     </section>
     <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="skills">
-        <h1 style="text-align: center">Skills</h1>
+        <h1 class="head_section" style="text-align: center">Skills</h1>
     <hr class="my-4">
         <form method="post" action="{% url 'edit_informations' %}">
             {% csrf_token %}
@@ -250,7 +255,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description For Your Skills :</label>
-                        <textarea name="bio_skills" class="form-control" id="exampleFormControlTextarea1" rows="4">{{ person.bio_skills }}</textarea>
+                        <textarea name="bio_skills" class="form-control" id="exampleFormControlTextarea1" rows="4">{% if person.bio_skills != None %}{{ person.bio_skills }}{% endif %}</textarea>
                     </div>
                 </div>
             </div>
@@ -258,7 +263,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name Of First Skill : </label>
-                    <input name="name_of_first_skill" value="{{ person.first_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+                    <input name="name_of_first_skill" {% if person.first_skill != None %}value="{{ person.first_skill }}"{% endif %} type="text" class="form-control"  placeholder="Enter Your Second Phone">
 
                 </div>
 
@@ -272,7 +277,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name Of Second Skill : </label>
-                    <input name="name_of_second_skill" value="{{ person.second_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+                    <input name="name_of_second_skill" {% if person.second_skill != None %}value="{{ person.second_skill }}"{% endif %} type="text" class="form-control"  placeholder="Enter Your Second Phone">
 
                 </div>
 
@@ -286,7 +291,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name Of Third Skill : </label>
-                    <input name="name_of_third_skill" value="{{ person.third_skill }}" type="text" class="form-control"  placeholder="Enter Your Second Phone">
+                    <input name="name_of_third_skill" {% if person.third_skill != None %}value="{{ person.third_skill }}"{% endif %} type="text" class="form-control"  placeholder="Enter Your Second Phone">
 
                 </div>
 
@@ -303,7 +308,7 @@
     <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
     <div class="row">
-        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">Services</h1></div>
+        <div class="col-md-10"><h1 class="head_section" style="text-align: center;margin-right: -150px">Services</h1></div>
         <hr class="my-4">
         <div class="col-md-2"><a href="{% url 'add_service' %}" class="btn btn-outline-warning">Add Service</a></div>
     </div>
@@ -311,6 +316,7 @@
 
     <br>
     <div class="row">
+    {% if services %}
     {% for service in services  %}
          <div class="col-md-4 col-sm-6 mb-4 text-center" id="service_{{ service.id }}">
             <div class="panel border p-4" style="min-height: 400px" id="content_of_service_number_{{ service.id }}">
@@ -334,16 +340,22 @@
         </div>
 
     {% endfor %}
+    {% else %}
+        <hr class="col-md-12 my-4">
+        <p class="col-md-12" style="text-align: center;font-size: 25px;font-family: Roboto,Arial, Helvetica, sans-serif;">Unfortunately , You don't have Services</p>
+        <hr class="col-md-12 my-4">
+    {% endif %}
     </div>
     </section>
 <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="news">
     <div class="row">
-        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">News</h1></div>
+        <div class="col-md-10"><h1 class="head_section" style="text-align: center;margin-right: -150px">News</h1></div>
         <div class="col-md-2"><a class="btn btn-outline-warning" href="{% url 'add_news' %}">Add News</a></div>
     </div>
     <br>
     <div class="row">
+    {% if news %}
         {% for new in news %}
             <div class="col-md-4 col-sm-6 mb-4 text-center" id="news_{{ new.id }}">
                 <div class="panel border p-4" style="min-height: 400px" id="content_of_news_number_{{ new.id }}">
@@ -363,13 +375,19 @@
 
 
         {% endfor %}
+
+    {% else %}
+        <hr class="col-md-12 my-4">
+        <p class="col-md-12" style="text-align: center;font-size: 25px;font-family: Roboto,Arial, Helvetica, sans-serif;">Unfortunately , You don't have News</p>
+        <hr class="col-md-12 my-4">
+    {% endif %}
     </div>
 
     </section>
     <hr class="my-4">
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="other_settings">
     <div class="row">
-        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px">Settings</h1></div>
+        <div class="col-md-10"><h1 style="text-align: center;margin-right: -150px" class="head_section">Settings</h1></div>
     </div>
             <hr class="my-4">
 

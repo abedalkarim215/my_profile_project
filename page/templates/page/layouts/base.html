@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My profile</title>
+    <title>{% block title %}{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static 'page/css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'user_auth/css/bootstrap.min.css' %}" >
 
     <link rel="stylesheet" href="{% static 'page/css/style.css' %}">
 
@@ -21,6 +21,14 @@
     background-size: 100%;
     background-position: 40% 0;
 }
+    .head_section {
+    text-decoration: #ffc107 underline;
+
+
+}
+    label{
+    font-weight: 700;
+}
 
     </style>
 </head>
@@ -31,10 +39,19 @@
     <main id="site-main">
         <div class="row m-0">
             <div class="col-md-9 offset-md-3 px-0">
-    {% block content %}
+            {% if messages %}
+                <section style="margin: 20px;border: white solid 2px;padding: 20px"  id="messages">
+                    {% for message in messages %}
+                        <div style="text-align: center" class="alert alert-primary" role="alert">
+                           {{message|safe}}
+                        </div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+                {% block content %}
 
-    {% endblock %}
-                       </div>
+                {% endblock %}
+            </div>
         </div>
     </main>
 
@@ -42,13 +59,34 @@
 
 
 
-<script src="{% static 'page/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'user_auth/js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'page/js/popper.min.js' %}" ></script>
-<script src="{% static 'page/js/bootstrap.min.js' %}" ></script>
+<script src="{% static 'user_auth/js/bootstrap.min.js' %}" ></script>
 <script src="{% static 'page/js/font.min.js' %}"></script>
 <script src="{% static 'vendor/typed/typed.min.js' %}"></script>
+
     {% block js %}
     {% endblock %}
+    <script>
+
+$(function() {
+    $('#no').hover(function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/no_logout.gif' %}";
+    },
+    function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/logout.gif' %}";
+    });
+});
+$(function() {
+    $('#close').hover(function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/no_logout.gif' %}";
+    },
+    function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/logout.gif' %}";
+    });
+});
+
+</script>
 <script>
 
     $(document).ready(function(e){
@@ -110,6 +148,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor =>{
 });
 
 </script>
-
 </body>
 </html>

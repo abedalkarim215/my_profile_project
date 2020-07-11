@@ -1,55 +1,149 @@
 {% load static %}
 <!-- header area -->
-    <header id="header">
+    <header id="header" style="">
         <div class="row m-0">
             <div class="col-3 bgcolor-black">
                 <nav class="primary-nav navbar-expand-md">
                     <div class="site-title text-center text-light " style="margin: 30px;margin-left: 10px">
+
+
+
                         {% if is_home %}
-                            <a href="{% url 'home' user__username %}" class="navbar-brand font-staat font-size-40">{{ user_profile.first_name }}<br>Profile</a>
+                            <div class="d-flex flex-column text-left">
+                            <a href="{% url 'profile' user__username %}" class="navbar-brand font-staat font-size-40 text-center" >{{ user_profile.first_name }}<br>Profile</a>
+                            <br>
+                                <a href="#home" class="nav-item nav-link text-white-50 font-os font-size-16 active">Home</a>
+                        <a href="#about_me" class="nav-item nav-link text-white-50 font-os font-size-16 active">About</a>
+                        <a href="#services" class="nav-item nav-link text-white-50 font-os font-size-16 active">Services</a>
+                        <a href="#news" class="nav-item nav-link text-white-50 font-os font-size-16 active">News</a>
+                        <a href="#footer" class="nav-item nav-link text-white-50 font-os font-size-16 active">Contact Us</a>
+                            </div>
+
+
 
                         {% elif from_edit_view %}
-                            <a href="{% url 'home' user__username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
-
-                        {% elif is_signup %}
-                            <a href="#" class="navbar-brand font-staat font-size-40">Create Your<br>Own</a>
-                        {% elif is_login %}
-                        <a href="#" class="navbar-brand font-staat font-size-40">Login</a>
-
-                        {% endif %}
-                        <p class="description text-uppercase font-os"></p>
-                    </div>
-                    <div class="d-flex flex-column">
-                        {% if from_edit_view %}
-                            <a href="#profile_link" class="nav-item nav-link text-white-50 font-os font-size-16 active">Profile Link</a>
+                            <div class="d-flex flex-column">
+                            <a href="{% url 'profile' user__username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                             <a href="#profile_link" class="nav-item nav-link text-white-50 font-os font-size-16 active">Profile Link</a>
                             <a href="#general_information" class="nav-item nav-link text-white-50 font-os font-size-16 active">General Information</a>
                             <a href="#skills" class="nav-item nav-link text-white-50 font-os font-size-16 active">skills</a>
                             <a href="#services" class="nav-item nav-link text-white-50 font-os font-size-16 active">Services</a>
                             <a href="#news" class="nav-item nav-link text-white-50 font-os font-size-16 active">News</a>
                             <a href="#other_settings" class="nav-item nav-link text-white-50 font-os font-size-16 active">Other Settings</a>
-                             <form style="display: inline" method="post" action="{% url 'logout_user' %}">
-                        {% csrf_token %}
-                        <button  style="margin-top: 10px;display: block;width: 100%" class="btn btn-outline-warning" type="submit">Logout</button>
-                        </form>
-                        {% elif is_home %}
-                        <a href="#home" class="nav-item nav-link text-white-50 font-os font-size-16 active">Home</a>
-                        <a href="#about_me" class="nav-item nav-link text-white-50 font-os font-size-16 active">About</a>
-                        <a href="#services" class="nav-item nav-link text-white-50 font-os font-size-16 active">Services</a>
-                        <a href="#news" class="nav-item nav-link text-white-50 font-os font-size-16 active">News</a>
-                        <a href="#footer" class="nav-item nav-link text-white-50 font-os font-size-16 active">Contact Us</a>
-                        {% elif is_login %}
-                            <img  width="100%" height="500px" style="overflow-style: revert;margin-top: -30px" src="{% static 'page/images/login3.jpg' %}">
+                            <button style="margin-top: 20px;display: block;width: 100%" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_logout">
+                                Logout
+                            </button>
+                            </div>
+
+
+
                         {% elif is_signup %}
-                            <img  width="100%" height="100%" style="overflow-style: revert;margin-top: -30px" src="{% static 'page/images/signup2.jpg' %}">
+                            <a  href="{% url 'sign_up_user' %}" class="navbar-brand font-staat font-size-40">Create Your<br>Own</a>
+                            <img  width="100%" height="100%" style="overflow-style: revert;margin-top: 0" src="{% static 'page/images/signup.jpg' %}">
+                          <br>
+                          <br>
+                          <br>
+                          <br>
+                            <a style="text-decoration: none" href="{% url 'login_user' %}">
+                            <button  style="margin-top: 10px;display: block;width: 100%" class="btn btn-outline-warning" >I have an account, Login</button>
+                            </a>
+
+
+
+                        {% elif is_login %}
+                        <a href="{% url 'login_user' %}" class="navbar-brand font-staat font-size-40">Login</a>
+                            <img  width="100%" height="500px" style="overflow-style: revert;margin-top: 0" src="{% static 'page/images/login3.jpg' %}">
+
+                        {% elif from_messages %}
+                            <div class="d-flex flex-column" style="text-align: left">
+                            <a style="text-align: center" href="{% url 'profile' request.user.username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                             <br>
+                                <a href="#your_messages" class="nav-item nav-link text-white-50 font-os font-size-16 active">Your Messages</a>
+                            <a href="#your_replays" class="nav-item nav-link text-white-50 font-os font-size-16 active">Your Replays</a>
+                                <br><br><br><br>
+                            <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-info" href="{% url 'index' %}">Home Page</a>
+                            <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-warning" href="{% url 'profile' request.user.username %}">Your Profile</a>
+                            <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-success" href="{% url 'edit_informations' %}">Edit Information</a>
+                            <button style="display: block;width: 100%;margin: 10px" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_logout">
+                                Logout
+                            </button>
+                            </div>
+                        {% elif from_add_service %}
+                             <div class="d-flex flex-column" style="text-align: left">
+                            <a style="text-align: center" href="{% url 'profile' request.user.username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                             <br>
+                                 <p>If You didnt choose a logo for your service the default logo will added to your service : </p>
+                                 <div style="text-align: center">
+                                    <img style="border: white 1px solid;padding: 10px" width="50%" height="10%" src="{% static 'page/images/default_logo_service.png' %}">
+                                 </div>
+                                 <br>
+                                 <br>
+
+                            <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Add the service and return to add another one</a>
+
+                            <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-warning" href="{% url 'edit_informations' %}">Edit Information Page</a>
+
+                            </div>
+                        {% elif from_add_news %}
+                             <div class="d-flex flex-column" style="text-align: left">
+                                 <a style="text-align: center" href="{% url 'profile' request.user.username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                                 <br>
+                                 <p>If You didnt choose an image for your news the default image will added to your news : </p>
+                                 <div style="text-align: center">
+                                     <img style="border: white 1px solid;padding: 10px" width="80%" height="10%" src="{% static 'page/images/default_image_news.jpg' %}">
+                                 </div>
+                                 <br>
+                                 <br>
+                                <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Add the news and return to add another one</a>
+                                <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-warning" href="{% url 'edit_informations' %}">Edit Information Page</a>
+
+                             </div>
+                        {% elif from_edit_service %}
+                             <div class="d-flex flex-column" style="text-align: left">
+                                 <a style="text-align: center" href="{% url 'profile' request.user.username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                                 <br>
+                                 <p>The Current Logo Of Your Service : </p>
+                                 <div style="text-align: center">
+                                     <img style="border: white 1px solid;padding: 10px" width="50%" height="10%" src="{{service.logo.url}}">
+                                 </div>
+                                 <br>
+                                 <br>
+                                <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Save The Changes And Continue Editing</a>
+                                <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Save The Changes And Go To Add A Service</a>
+                                <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-warning" href="{% url 'edit_informations' %}">Edit Information Page</a>
+
+                             </div>
+                        {% elif from_edit_news %}
+                             <div class="d-flex flex-column" style="text-align: left">
+                                 <a style="text-align: center" href="{% url 'profile' request.user.username %}" class="navbar-brand font-staat font-size-40">{{ request.user.username }}<br>Profile</a>
+                                 <br>
+                                 <p>The Current Image Of Your News : </p>
+                                 <div style="text-align: center">
+                                     <img style="border: white 1px solid;padding: 10px" width="80%" height="10%" src="{{news.image.url}}">
+                                 </div>
+                                 <br>
+                                 <br>
+                                <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Save The Changes And Continue Editing</a>
+                                <a style="display: block;width: 100%;margin: 10px;" class="btn btn-outline-warning">Save The Changes And Go To Add News</a>
+                                <a style="display: block;width: 100%;margin: 10px" class="btn btn-outline-warning" href="{% url 'edit_informations' %}">Edit Information Page</a>
+
+                             </div>
                         {% endif %}
+                        <p class="description text-uppercase font-os"></p>
                     </div>
+
                     <br>
                 {% if is_home %}
                     {% if user.is_authenticated %}
-                        <form style="display: inline" method="post" action="{% url 'logout_user' %}">
-                        {% csrf_token %}
-                        <button  style="margin: 15px;" class="btn btn-outline-warning" type="submit">Logout</button>
-                        </form>
+                        <div class="row" style="margin-top: -40px;margin-bottom: 10px">
+                        <div class="col-md-12">
+                            <a href="{% url 'user_messages' %}" class="btn btn-outline-warning" style="display: block;width: 100%;">Your Messages</a>
+                        </div>
+                        </div>
+
+                        <button style="margin: 15px;" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal_logout">
+                                Logout
+                        </button>
                         <a href="{% url 'edit_informations' %}" class="btn btn-outline-warning">Edit Your Informations</a>
                     {% else %}
                         <a href="{% url 'login_user' %}" style="margin: 15px;" class="btn btn-outline-warning" type="submit">Login</a>

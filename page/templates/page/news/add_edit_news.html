@@ -1,5 +1,6 @@
 {% extends 'page/layouts/base.html' %}
 {% load static %}
+{% block title %}{% if news %}Edit{% else %} Add{% endif %} News | {{request.user.username }}{% endblock %}
 {% block content %}
     <section style="margin: 20px;border: black solid 2px;padding: 20px"  id="services">
         <h1 style="text-align: center">{% if news %}Edit{% else %} Add{% endif %} News</h1>
@@ -10,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="exampleInputEmail1">The Title : </label>
-                    <input {% if news %} value="{{ news.title }}" {% endif %} name="title_of_the_news" type="text" class="form-control"  placeholder="Enter the title">
+                    <input required {% if news %} value="{{ news.title }}" {% endif %} name="title_of_the_news" type="text" class="form-control"  placeholder="Enter the title">
                 </div>
             </div>
         </div>
@@ -22,7 +23,7 @@
                     </div>
                 </div>
             </div>
-            <br>
+
         <label >Image for the news :</label>
 
          <div class="row" style="border: black dashed 2px;padding: 30px">
@@ -30,7 +31,7 @@
                 <div class="custom-file" >
                     <div class="row">
                         <div class="col-md-6">
-                            <input name="news_image" type="file" {% if news %}value="{{ news.image.url }}" {% endif %} >
+                            <input  name="news_image" type="file" {% if news %}value="{{ news.image.url }}" {% endif %} >
                         </div>
                     {% if news %}
                         <div class="col-md-6">
@@ -44,7 +45,7 @@
             </div>
         </div>
             <br>
-            <br>
+
             <button style="display: block;width: 100%" class="btn btn-warning" type="submit">{% if news %}Edit{% else %}Add{% endif %} News</button>
         </form>
     </section>

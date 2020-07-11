@@ -1,0 +1,136 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'user_auth/css/bootstrap.min.css' %}">
+    <style>
+.navbarM {
+    background-color: #000000;
+}
+.buttonM {
+    color: #ecc19c;
+}
+/*.a {*/
+/*    color: #ffc13b;*/
+/*    font-size: 20px;*/
+/*}*/
+.liM {
+    margin: 10px;
+}
+#logo {
+    color: #ffc107;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+    </style>
+    <title>Profile Maker | Home</title>
+
+{#    <link rel="icon" type="image/png"  href="{% static 'todo/images/icons/icon.png' %}">#}
+
+</head>
+<body>
+
+
+{% include 'page/layouts/index_navbar.html' %}
+<div class="container">
+<br>
+    {% if messages %}
+        <section style="margin: 20px;border: white solid 2px;padding: 20px"  id="messages">
+            {% for message in messages %}
+                <div style="text-align: center" class="alert alert-primary" role="alert">
+                   {{message|safe}}
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+<div style="text-align: center;margin-top: -30px">
+        <p style="font-size: 70px;text-decoration: #ffc107 underline">Profile Maker APP</p>
+
+    {% if user.is_authenticated %}
+        <p style="font-size: 50px">Welcome <span style="font-weight: 100;text-decoration: underline  #e0a800  solid ">{{ request.user.first_name }} {{ request.user.last_name }}</span> to your account . </p>
+        <br>
+        <br>
+        <div>
+        <a href="{% url 'profile' request.user.username %}" style="text-decoration: none">
+            <button style="display:inline;min-width: 40%;margin: 10px"  class="btn btn-warning btn-lg" >
+                    Your Profile
+            </button>
+            </a>
+            <a href="{% url 'user_messages' %}" style="text-decoration: none">
+
+            <button style="display:inline;min-width: 40%;margin: 10px"  class="btn btn-info btn-lg">
+                   Your Messages
+            </button>
+            </a>
+        </div>
+        <div style="text-align: center;">
+            <a href="{% url 'edit_informations' %}" style="text-decoration: none">
+
+            <button style="display:inline;min-width: 40%;margin: 10px"  class="btn btn-secondary btn-lg">
+                   Edit Information
+            </button>
+            </a>
+        </div>
+    {% else%}
+        <p style="font-size: 30px">This app allows you to create your own personal page to share it with others</p>
+        <br>
+        <div style="text-align: left;margin-left: 60px" >
+        <p style="font-size: 30px">This app allows you to :</p>
+        <ul>
+        <li>Upload Your images</li>
+        <li>Share Your information</li>
+        <li>Show your skills</li>
+        <li>Show your services</li>
+        <li>Show your news</li>
+        <li>Upload Your CV</li>
+        <li>The app allows people to send you messages ,and You can answer them</li>
+        </ul>
+        </div>
+        <br>
+        <div>
+            <a href="{% url 'login_user' %}" style="text-decoration: none">
+
+            <button style="display:inline;min-width: 40%"  class="btn btn-info btn-lg">
+                   Login
+            </button>
+            </a>
+
+            <a href="{% url 'sign_up_user' %}" style="text-decoration: none">
+
+            <button style="display:inline;min-width: 40%"  class="btn btn-warning btn-lg">
+                   Create an account
+            </button>
+            </a>
+
+        </div>
+
+    {% endif%}
+    </div>
+
+</div>
+<script src="{% static 'user_auth/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'user_auth/js/bootstrap.min.js' %}"></script>
+    <script>
+
+$(function() {
+    $('#no').hover(function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/no_logout.gif' %}";
+    },
+    function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/logout.gif' %}";
+    });
+});
+$(function() {
+    $('#close').hover(function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/no_logout.gif' %}";
+    },
+    function(){
+        document.getElementById('logout').src="{% static 'user_auth/images/logout.gif' %}";
+    });
+});
+</script>
+</body>
+</html>

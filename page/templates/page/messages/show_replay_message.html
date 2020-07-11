@@ -1,0 +1,22 @@
+{% extends 'page/layouts/base.html' %}
+{% block title %}Profile | Messages{% endblock%}
+{% block content %}
+    <style>
+        .label_m{
+            font-weight: 700;
+            font-size: 20px;
+        }
+    </style>
+<section style="margin: 20px;border: black solid 2px;padding: 20px" >
+        <h1 class="head_section" style="text-align: center">The Replay Message :</h1>
+    <hr class="my-4">
+    <div>
+        <p><span class="label_m"> receiver's Name : </span>{{ replay_message_details.receiver_name }}</p>
+        <p><span class="label_m">receiver's Email : </span>{{ replay_message_details.receiver_email }}</p>
+        <p><span class="label_m">Content Of The Message : </span></p>
+        <p>{{ replay_message_details.text }}</p>
+        <p><span class="label_m">Time Of Sending The Message : </span>{{ replay_message_details.time }}</p>
+    </div>
+    </section>
+
+{% endblock %}

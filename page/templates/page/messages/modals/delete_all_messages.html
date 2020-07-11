@@ -1,0 +1,32 @@
+{% load static %}
+<div class="modal fade" id="exampleModal_delete_all_messages" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete All Messages</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span id="close" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <br>
+       <form style="margin-top: -15px" method="post" action="{% url 'delete_all_messages' %}">
+            {% csrf_token %}
+            <p style="text-align: center;font-size: 20px;background-color: red;height: 60px;padding-top:10px ">Warning !!</p>
+            <p style="text-align: center;font-size: 15px"> This opreation can not undo</p>
+            <p style="text-align: center;font-size: 15px"> Are you sure you wanna delete all the Messages</p>
+            <hr class="my-4">
+                    <div class="row">
+                        <div class="col-md-12" style="margin-right: 10px">
+                      <button style="text-align: center;width: 100%;" type="submit" class="btn btn-danger">Delete All Messages</button>
+                        </div>
+                    </div>
+                </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% block js %}
+
+
+{% endblock %}

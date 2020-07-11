@@ -1,19 +1,19 @@
 {% extends 'page/layouts/base.html' %}
 {% load static %}
 {% block content %}
-<main id="site-main">
-        <div class="row m-0">
-            <div style="text-align: center" class="col-md-9 offset-md-3 px-0">
-    <div class="jumbotron">
-  <h1 class="display-4">'' {{ news_details.title }} ,,</h1>
+
+
+
+    <div class="jumbotron" style="text-align: center;background-color: white">
+        <h1 class="display-4" style="color: #ffc107">-- {{ news_details.title }} --</h1>
         <hr class="my-4">
         <img src="{{ news_details.image.url }}" class="img-thumbnail">
         <hr class="my-4">
-  <p class="lead" style="text-align: left">{{news_details.description}}</p>
-  <hr class="my-4">
-  <a class="btn btn-primary btn-lg" href="{% url 'home' %}" role="button">back to Home page</a>
+        <p class="lead" style="text-align: left;color: black;font-weight: 400">{{news_details.description}}</p>
+        <hr class="my-4">
+        <a class="btn btn-outline-info" href="{% url 'profile' news_details.user.user.username  %}" role="button">Back to {{news_details.user.user.first_name}} Profile</a>
     </div>
-            </div>
-        </div>
-</main>
+
+
+
 {% endblock %}
